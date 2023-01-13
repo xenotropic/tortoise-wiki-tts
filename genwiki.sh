@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /workspace/tortoise-tts
+cd /workspace/tortoise-wiki-tts
 python -m pip install -r requirements.txt
 python -m pip install pysbd html5lib
 python -m pip install .
