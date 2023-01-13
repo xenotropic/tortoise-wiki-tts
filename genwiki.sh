@@ -1,8 +1,8 @@
 #!/bin/bash
-#pip3 install rotary_embedding_torch librosa einops inflect
-#pip3 install pysbd html5lib
-#cd /notebooks/tortoise-tts
-#python3 setup.py install
+python -m pip install rotary_embedding_torch librosa einops inflect
+python -m pip install pysbd html5lib
+cd /notebooks/tortoise-tts
+python -m php install .
 #right now this is just hardcoded to load the wikipedia top 25; now planning to make it more general. also using paperspace filespace naming conventions
 python3 /workspace/tortoise-wiki-tts/scripts/wikitop25tts.py > /notebooks/inputs/wikitop25.txt
 python3 /workspace/tortoise-wiki-tts/read.py --voice train_lescault --preset fast --output_path=/workspace/outputs/wikitop25 --text-file=/workspace/inputs/wikitop25.txt  2>&1 | tee -a /workspace/logs/wiki25log.txt
