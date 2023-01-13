@@ -9,4 +9,10 @@ unidecode
 scipy
 librosa
 numba==0.48.0
+torchaudio
 ffmpeg
+threadpoolctl
+llvmlite
+appdirs
+pysbd
+html5lib
