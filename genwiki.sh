@@ -1,7 +1,6 @@
 #!/bin/bash
 cd /workspace/tortoise-wiki-tts
 python -m pip install -r requirements.txt
-python -m pip install pysbd html5lib
 python -m pip install .
 #right now this is just hardcoded to load the wikipedia top 25; now planning to make it more general. also using paperspace filespace naming conventions
 python /workspace/tortoise-wiki-tts/scripts/wikiparse-top25.py > /workspace/inputs/wikitop25.txt
