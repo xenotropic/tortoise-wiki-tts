@@ -16,3 +16,4 @@ llvmlite
 appdirs
 pysbd
 html5lib
+pandas
