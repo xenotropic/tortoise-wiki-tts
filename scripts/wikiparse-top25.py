@@ -2,6 +2,7 @@ import pandas
 from urllib.request import urlopen
 import json
 import pysbd
+import re
 
 wikiurl = "Wikipedia%3ATop_25_Report"
 
@@ -13,6 +14,20 @@ def make_ordinal(n):
         suffix = ['th', 'st', 'nd', 'rd', 'th'][min(n % 10, 4)]
     return str(n) + suffix
 
+# the page is cross-referenced with e.g., "#4" to refer to #4 on the list.
+# this replaces it with "number 4, [title of #4]," to make it easier to follow.
+
+def ordinal_replace(matchobj):
+    num = matchobj.group(0)[1:] #using string slicing to remove leading #
+    num_index = int (num) - 1 # text numbers start from one, dataframe from zero
+    return " number " + num + ", " + df.iloc[num_index]["Article"] + ", "
+
+# makes $1.2 billion into 1.2 billion dollars which TTS handles more gracefully
+
+def money_replace(matchobj):
+    moneystr = matchobj.group(0)[1:] # string slice off $
+    return moneystr + " dollars "
+    
 # this happens to be the subheading line that has the dates
 
 json_url = urlopen("https://en.wikipedia.org/w/api.php?action=parse&format=json&page=" + wikiurl + "&prop=sections&formatversion=2")
@@ -23,11 +38,16 @@ stringtoread = ("Here are the " + title + "." )
 dfl = pandas.read_html("https://en.wikipedia.org/wiki/" + wikiurl , attrs={"class": "wikitable"}, flavor='html5lib');
 # that returns a list of dataframes, we want the first and only dataframe, which is the only wikitable on the page
 df = dfl[0]
-#print (df)
-for row_index, row in df.iterrows():
-    stringtoread += ("The " + make_ordinal (row["Rank"]) + " most popular article this week was " + row["Article"] + ". " + row["Notes/about"] + " " )
+print (df)
 
-#print (stringtoread)
+
+for row_index, row in df.iterrows():
+    notes =  row["Notes/about"]
+    notes = re.sub('#[0-9][0-9]?', ordinal_replace, notes)
+    notes = re.sub('\$[0-9.]* ?[bmtz]illion', money_replace, notes) 
+    to_append = ("The " + make_ordinal (row["Rank"]) + " most popular article this week was " + row["Article"] + ". " + notes + " " )
+    
+    stringtoread += to_append
 
 seg = pysbd.Segmenter(language="en", clean=False)
 sentences = seg.segment(stringtoread)
@@ -35,7 +55,8 @@ sentences = seg.segment(stringtoread)
 tokenstring=""
 
 for sen in sentences:
-    #TODO: need to further tokenize these based on parens (long parens only?), dashes (n and m), semicolons, quotes
+    #TODO: might need to further tokenize these based on parens (long parens only?), dashes (n and m), semicolons, quotes
     tokenstring+=sen + "| "
 
 print (tokenstring)
+
