@@ -1,10 +1,12 @@
 For the primary documentation, see https://github.com/neonbjb/tortoise-tts/
 
-I'm trying to build out a easy-ish to use pipeline to take Wikipedia articles and generate a Tortoise-tts rendering of them. Not quite usable yet!
+I'm buiding a text processing pipeline to take Wikipedia articles and generate a Tortoise-tts rendering of them. You can listen to example full-article renders at [https://morris.cloud/wikipedia-tts/](https://morris.cloud/wikipedia-tts/) , which is a podcast RSS feed. Right now these are more about refinement of the process than providing content per se (although they're pretty good!). The renders should have progressively fewer errors as you get later in the feed. Basically my process is to render an article, listen and take notes, and then fix the problematic categories of text.
 
 ## Voices. 
 
-To add voices they have to be in 22050 Hz 32-bit float format. One can do this with:
+The voices in the feed are based on [LibriTTS voices](https://www.openslr.org/60/). Althugh I may use a single voice in some articles in the podcast feed, eventually I will probably blend two or more voices, so they aren't the voice of any single person. 
+ 
+To add more voices they have to be in 22050 Hz 32-bit float format. One can do this with:
 
 `ffmpeg -i 3.wav -ar 22050 -c:a pcm_f32le 3o.wav`
 
