@@ -1,5 +1,7 @@
 For the primary documentation, see https://github.com/neonbjb/tortoise-tts/
 
+Also I'm moving away from this repo -- this was more of a sandbox while I was learning but I don't think I need to do much in a fork of Tortoise. Mostly I am now working in https://github.com/xenotropic/wikipedia-tts
+
 I'm buiding a text processing pipeline to take Wikipedia articles and generate a Tortoise-tts rendering of them. You can listen to example full-article renders at [https://morris.cloud/wikipedia-tts/](https://morris.cloud/wikipedia-tts/) , which is a podcast RSS feed. Right now these are more about refinement of the process than providing content per se (although they're pretty good!). The renders should have progressively fewer errors as you get later in the feed. Basically my process is to render an article, listen and take notes, and then fix the problematic categories of text.
 
 ## Voices. 
@@ -12,7 +14,7 @@ To add more voices they have to be in 22050 Hz 32-bit float format. One can do t
 
 ## To-do
 
-Most of what I'm doing is refining what happens in the text preprocessor to help the tts engine with things it does not say correctly by default. Eventually many of these may well be fixed by larger training sets, but for now I'm doing the simpler task of just making the text "easy to say", since tortoise does quite well saying things phonetically. 
+Most of what I'm doing is refining what happens in the text preprocessor to help the tts engine with things it does not say correctly by default. Eventually many of these may well be fixed by larger training sets, but for now I'm doing the simpler task of just making the text "easy to say", since tortoise does quite well saying things phonetically.  
 
 - [ ] Reduce repeats -- sometimes Tortoise "phrase stutters" saying the same few words two or three times. IIRC there are parameters that can fix this. Have to find them. 
 - [ ] Separate acronyms -- so it says FBI as F B I rather than Fubeye
